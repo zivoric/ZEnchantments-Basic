@@ -1,0 +1,13 @@
+name: ZEnchantments-Basic
+main: com.hoodiecoder.enchantmentcore.basic.BasicEnchPlugin
+version: 1.0
+api-version: 1.16
+depend: [ZEnchantmentCore]
+#commands:
+#    zenchant:
+#        description: Enchants with Z-Enchantment.
+#        usage: /zenchant
+#permissions:
+#  zenchants.sample:
+#    description: Sample permission.
+#    default: op
