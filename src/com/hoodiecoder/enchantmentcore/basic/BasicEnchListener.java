@@ -26,7 +26,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.hoodiecoder.enchantmentcore.CustomEnchListener;
 import com.hoodiecoder.enchantmentcore.ListenerType;
-import com.hoodiecoder.enchantmentcore.nms.CoreEnchParent;
+import com.hoodiecoder.enchantmentcore.CoreEnchParent;
 
 public class BasicEnchListener extends CustomEnchListener {
 	public BasicEnchListener(Plugin implementer, CoreEnchParent[] enchs) {
@@ -44,11 +44,11 @@ public class BasicEnchListener extends CustomEnchListener {
 			LivingEntity entity = (LivingEntity) dmgEvent.getEntity();
 			player = (Player) dmgEvent.getDamager();
 			double damage = dmgEvent.getDamage();
-			if (ench.equals(BasicEnchPlugin.LEVITATOR)) {
+			if (ench.equals(BasicEnchPlugin.getInstance().LEVITATOR)) {
 				PotionEffect levitate = new PotionEffect(PotionEffectType.LEVITATION, 4*20*levels.get(0), 1, true);
 				entity.addPotionEffect(levitate);
 				return;
-			} else if (ench.equals(BasicEnchPlugin.LIFE_STEAL)) {
+			} else if (ench.equals(BasicEnchPlugin.getInstance().LIFE_STEAL)) {
 				double finalDamage = dmgEvent.getFinalDamage();
 				double health = player.getHealth();
 				double newHealth = health + finalDamage*(0.1*(levels.get(0)));
@@ -57,11 +57,11 @@ public class BasicEnchListener extends CustomEnchListener {
 				}
 				player.setHealth(newHealth);
 				return;
-			} else if (ench.equals(BasicEnchPlugin.DECAY)) {
+			} else if (ench.equals(BasicEnchPlugin.getInstance().DECAY)) {
 				PotionEffect wither = new PotionEffect(PotionEffectType.WITHER, 100, levels.get(0)-1, true);
 				entity.addPotionEffect(wither);
 				return;
-			} else if (ench.equals(BasicEnchPlugin.HEALING)) {
+			} else if (ench.equals(BasicEnchPlugin.getInstance().HEALING)) {
 				double oldDamage = damage;
 				double health = entity.getHealth();
 				double newHealth = health + levels.get(0)*0.25*oldDamage;
@@ -72,7 +72,7 @@ public class BasicEnchListener extends CustomEnchListener {
 				entity.setHealth(newHealth);
 				return;
 			}
-			if (ench.equals(BasicEnchPlugin.ENERGIZER)) {
+			if (ench.equals(BasicEnchPlugin.getInstance().ENERGIZER)) {
 				int[] scaling = {3,3,3,3};
 				int scale = 0;
 				for (int i = 0; i < enchCount; i++) {
@@ -89,7 +89,7 @@ public class BasicEnchListener extends CustomEnchListener {
 			EntityShootBowEvent bowEvent = (EntityShootBowEvent) event;
 			player = (Player) bowEvent.getEntity();
 			Projectile proj = (Projectile) bowEvent.getProjectile();
-			if (ench.equals(BasicEnchPlugin.SNOWBALL)) {
+			if (ench.equals(BasicEnchPlugin.getInstance().SNOWBALL)) {
 				bowEvent.setCancelled(true);
 				player.launchProjectile(Snowball.class).setVelocity(proj.getVelocity());
 			}
@@ -97,7 +97,7 @@ public class BasicEnchListener extends CustomEnchListener {
 		case ENTITY_BECOME_TARGETED:
 			EntityTargetEvent targetEvent = (EntityTargetEvent) event;
 			player = (Player) targetEvent.getTarget();
-			if (ench.equals(BasicEnchPlugin.DOUBLE_AGENT)) {
+			if (ench.equals(BasicEnchPlugin.getInstance().DOUBLE_AGENT)) {
 				EntityTargetEvent.TargetReason[] neutralReasons = new EntityTargetEvent.TargetReason[]{TargetReason.TARGET_ATTACKED_ENTITY, TargetReason.TARGET_ATTACKED_NEARBY_ENTITY, TargetReason.TARGET_ATTACKED_OWNER, TargetReason.REINFORCEMENT_TARGET};
 				EntityTargetEvent.TargetReason[] invalidReasons = new EntityTargetEvent.TargetReason[]{TargetReason.TEMPT, TargetReason.CUSTOM, TargetReason.UNKNOWN};
 				boolean canBeCanceled = true;
@@ -136,27 +136,38 @@ public class BasicEnchListener extends CustomEnchListener {
 			if (yMod == 0) yMod = -1;
 			int zMod = (int) Math.signum(locDiff.getZ());
 			if (zMod == 0) zMod = -1;
-			if (ench.equals(BasicEnchPlugin.EXCAVATOR)) {
+			if (ench.equals(BasicEnchPlugin.getInstance().EXCAVATOR)) {
 				for (int x = 0; xMod > 0 ? x <= xMod : x >= xMod; x+=xMod) {
 					for (int y = 0; yMod > 0 ? y <= yMod : y >= yMod; y+=yMod) {
 						for (int z = 0; zMod > 0 ? z <= zMod : z >= zMod; z+=zMod) {
 							Block current = player.getWorld().getBlockAt(block.getLocation().add(x, y, z));
+							Material currentMaterial = current.getType();
 							if (player.getGameMode().equals(org.bukkit.GameMode.CREATIVE)) {
 								current.setType(Material.AIR);
 							} else {
 								if (!disallowed.contains(current.getType())) {
 									current.breakNaturally(items.get(0));
-								}
+								} if (currentMaterial != current.getType()) {
 								ItemMeta im = items.get(0).getItemMeta();
+								if (im==null) return;
 								Damageable is = (Damageable) im;
-								is.setDamage(is.getDamage()+1);
 								if (im.getEnchantLevel(Enchantment.DURABILITY) != -1) {
 									double random = Math.random()*(1+im.getEnchantLevel(Enchantment.DURABILITY));
 									if ((int) random == 0) {
-										items.get(0).setItemMeta((ItemMeta) is);
+										is.setDamage(is.getDamage()+1);
 									}
 								} else {
+									is.setDamage(is.getDamage()+1);
+								}
+								if (is.getDamage() < items.get(0).getType().getMaxDurability()) {
 									items.get(0).setItemMeta((ItemMeta) is);
+								} else {
+									if (items.get(0).equals(player.getInventory().getItemInMainHand())) {
+										player.getInventory().setItemInMainHand(null);
+									} else if (items == player.getInventory().getItemInOffHand()) {
+										player.getInventory().setItemInOffHand(null);
+									}
+								}
 								}
 							}
 						}
