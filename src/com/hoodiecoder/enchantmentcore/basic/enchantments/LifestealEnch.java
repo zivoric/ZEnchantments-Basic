@@ -3,18 +3,18 @@ package com.hoodiecoder.enchantmentcore.basic.enchantments;
 import java.util.List;
 
 import org.bukkit.attribute.Attribute;
+import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.hoodiecoder.enchantmentcore.CustomEnch;
 import com.hoodiecoder.enchantmentcore.EnchantmentHolder;
-import com.hoodiecoder.enchantmentcore.utils.EnchEnums.EnchantmentSlotEnum;
-import com.hoodiecoder.enchantmentcore.utils.EnchEnums.RarityEnum;
+import com.hoodiecoder.enchantmentcore.utils.EnchEnums.Rarity;
 
 public class LifestealEnch extends CustomEnch {
 	public LifestealEnch(EnchantmentHolder holder) {
-		super(holder);
+		super(holder, "life_steal");
 	}
 
 	@Override
@@ -23,23 +23,17 @@ public class LifestealEnch extends CustomEnch {
 	}
 
 	@Override
-	public EnchantmentSlotEnum getEnchantmentSlot() {
-		return EnchantmentSlotEnum.WEAPON;
-	}
-
-	@Override
 	public int getMaxLevel() {
 		return 10;
 	}
-
 	@Override
-	public String getName() {
-		return "life_steal";
+	public int getModifiedMin(int enchLevel) {
+		return 1 + enchLevel * 7;
 	}
 
 	@Override
-	public RarityEnum getRarity() {
-		return RarityEnum.COMMON;
+	public Rarity getRarity() {
+		return Rarity.COMMON;
 	}
 	@Override
 	public void onDealDamage(EntityDamageByEntityEvent event, List<Integer> levels, List<ItemStack> items) {
@@ -51,5 +45,10 @@ public class LifestealEnch extends CustomEnch {
 			newHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
 		}
 		player.setHealth(newHealth);
+	}
+
+	@Override
+	public EnchantmentTarget getItemTarget() {
+		return EnchantmentTarget.WEAPON;
 	}
 }

@@ -2,6 +2,7 @@ package com.hoodiecoder.enchantmentcore.basic.enchantments;
 
 import java.util.List;
 
+import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
@@ -10,12 +11,11 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.hoodiecoder.enchantmentcore.CustomEnch;
 import com.hoodiecoder.enchantmentcore.EnchantmentHolder;
-import com.hoodiecoder.enchantmentcore.utils.EnchEnums.EnchantmentSlotEnum;
-import com.hoodiecoder.enchantmentcore.utils.EnchEnums.RarityEnum;
+import com.hoodiecoder.enchantmentcore.utils.EnchEnums.Rarity;
 
 public class EnergizerEnch extends CustomEnch {
 	public EnergizerEnch(EnchantmentHolder holder) {
-		super(holder);
+		super(holder, "energizer");
 	}
 
 	@Override
@@ -24,23 +24,13 @@ public class EnergizerEnch extends CustomEnch {
 	}
 
 	@Override
-	public EnchantmentSlotEnum getEnchantmentSlot() {
-		return EnchantmentSlotEnum.ARMOR;
-	}
-
-	@Override
 	public int getMaxLevel() {
 		return 1;
 	}
 
 	@Override
-	public String getName() {
-		return "energizer";
-	}
-
-	@Override
-	public RarityEnum getRarity() {
-		return RarityEnum.VERY_RARE;
+	public Rarity getRarity() {
+		return Rarity.VERY_RARE;
 	}
 	@Override
 	public void onDealDamage(EntityDamageByEntityEvent event, List<Integer> levels, List<ItemStack> items) {
@@ -54,5 +44,10 @@ public class EnergizerEnch extends CustomEnch {
 		if (speedLevel>2) speedLevel = 2;
 		PotionEffect scalingSpeed = new PotionEffect(PotionEffectType.SPEED, 5*(scale), speedLevel+1, true);
 		player.addPotionEffect(scalingSpeed);
+	}
+
+	@Override
+	public EnchantmentTarget getItemTarget() {
+		return EnchantmentTarget.ARMOR;
 	}
 }

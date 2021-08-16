@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
@@ -14,12 +15,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.hoodiecoder.enchantmentcore.CustomEnch;
 import com.hoodiecoder.enchantmentcore.EnchantmentHolder;
-import com.hoodiecoder.enchantmentcore.utils.EnchEnums.EnchantmentSlotEnum;
-import com.hoodiecoder.enchantmentcore.utils.EnchEnums.RarityEnum;
+import com.hoodiecoder.enchantmentcore.utils.EnchEnums.Rarity;
 
 public class ExcavatorEnch extends CustomEnch {
 	public ExcavatorEnch(EnchantmentHolder holder) {
-		super(holder);
+		super(holder, "excavator");
 	}
 
 	@Override
@@ -28,26 +28,17 @@ public class ExcavatorEnch extends CustomEnch {
 	}
 
 	@Override
-	public EnchantmentSlotEnum getEnchantmentSlot() {
-		return EnchantmentSlotEnum.DIGGER;
-	}
-
-	@Override
 	public int getMaxLevel() {
 		return 1;
 	}
 
 	@Override
-	public String getName() {
-		return "excavator";
-	}
-
-	@Override
-	public RarityEnum getRarity() {
-		return RarityEnum.VERY_RARE;
+	public Rarity getRarity() {
+		return Rarity.VERY_RARE;
 	}
 	@Override
 	public void onBreakBlock(BlockBreakEvent event, List<Integer> levels, List<ItemStack> items) {
+		if (event.isCancelled()) return;
 		List<Material> disallowed = Arrays.asList(Material.BEDROCK, Material.BARRIER, Material.COMMAND_BLOCK, Material.BEDROCK, Material.END_PORTAL_FRAME, Material.END_PORTAL, Material.NETHER_PORTAL, Material.STRUCTURE_BLOCK);
 		Player player = event.getPlayer();
 		Block block = event.getBlock();
@@ -96,5 +87,10 @@ public class ExcavatorEnch extends CustomEnch {
 				}
 			}
 		}
+	}
+
+	@Override
+	public EnchantmentTarget getItemTarget() {
+		return EnchantmentTarget.TOOL;
 	}
 }

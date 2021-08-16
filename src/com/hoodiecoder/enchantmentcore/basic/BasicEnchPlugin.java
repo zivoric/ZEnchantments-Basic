@@ -7,7 +7,8 @@ import com.hoodiecoder.enchantmentcore.EnchantmentHolder;
 import com.hoodiecoder.enchantmentcore.basic.enchantments.*;
 
 public class BasicEnchPlugin extends JavaPlugin {
-	private final EnchantmentHolder holder = new EnchantmentHolder();
+	private final EnchantmentHolder holder = new EnchantmentHolder(this);
+	public final CustomEnch INCONSISTENCY_CURSE = new InconsistencyCurse(holder);
 	public final CustomEnch DECAY = new DecayEnch(holder);
 	public final CustomEnch DOUBLE_AGENT = new DoubleAgentEnch(holder);
 	public final CustomEnch ENERGIZER = new EnergizerEnch(holder);

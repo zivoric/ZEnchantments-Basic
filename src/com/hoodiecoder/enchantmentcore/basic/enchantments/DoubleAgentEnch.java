@@ -2,18 +2,18 @@ package com.hoodiecoder.enchantmentcore.basic.enchantments;
 
 import java.util.List;
 
+import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
 import org.bukkit.inventory.ItemStack;
 
 import com.hoodiecoder.enchantmentcore.CustomEnch;
 import com.hoodiecoder.enchantmentcore.EnchantmentHolder;
-import com.hoodiecoder.enchantmentcore.utils.EnchEnums.EnchantmentSlotEnum;
-import com.hoodiecoder.enchantmentcore.utils.EnchEnums.RarityEnum;
+import com.hoodiecoder.enchantmentcore.utils.EnchEnums.Rarity;
 
 public class DoubleAgentEnch extends CustomEnch {
 	public DoubleAgentEnch(EnchantmentHolder holder) {
-		super(holder);
+		super(holder, "double_agent");
 	}
 
 	@Override
@@ -22,27 +22,16 @@ public class DoubleAgentEnch extends CustomEnch {
 	}
 
 	@Override
-	public EnchantmentSlotEnum getEnchantmentSlot() {
-		return EnchantmentSlotEnum.ARMOR;
-	}
-
-	@Override
 	public int getMaxLevel() {
 		return 2;
 	}
 
 	@Override
-	public String getName() {
-		return "double_agent";
-	}
-
-	@Override
-	public RarityEnum getRarity() {
-		return RarityEnum.VERY_RARE;
+	public Rarity getRarity() {
+		return Rarity.VERY_RARE;
 	}
 	@Override
 	public void onTargeted(EntityTargetEvent event, List<Integer> levels, List<ItemStack> items) {
-		//Player player = (Player) event.getTarget();
 		TargetReason[] neutralReasons = new EntityTargetEvent.TargetReason[]{TargetReason.TARGET_ATTACKED_ENTITY, TargetReason.TARGET_ATTACKED_NEARBY_ENTITY, TargetReason.TARGET_ATTACKED_OWNER, TargetReason.REINFORCEMENT_TARGET};
 		TargetReason[] invalidReasons = new EntityTargetEvent.TargetReason[]{TargetReason.TEMPT, TargetReason.CUSTOM, TargetReason.UNKNOWN};
 		boolean canBeCanceled = true;
@@ -67,5 +56,10 @@ public class DoubleAgentEnch extends CustomEnch {
 		if (canBeCanceled) {
 			event.setCancelled(true);
 		}
+	}
+
+	@Override
+	public EnchantmentTarget getItemTarget() {
+		return EnchantmentTarget.ARMOR;
 	}
 }
