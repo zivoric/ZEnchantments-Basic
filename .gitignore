@@ -1,6 +1,12 @@
 /bin/
-
+/classes/
 .classpath
 .project
+
+.idea/
+
+*.iml
+*.ipr
+*.iws
 
 .settings/

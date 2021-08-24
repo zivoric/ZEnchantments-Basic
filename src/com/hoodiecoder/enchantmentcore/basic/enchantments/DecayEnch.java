@@ -29,7 +29,7 @@ public class DecayEnch extends CustomEnch {
 	}
 	
 	@Override
-	public Rarity getRarity() {
+	public Rarity getEnchantmentRarity() {
 		return Rarity.RARE;
 	}
 	@Override

@@ -32,7 +32,7 @@ public class LifestealEnch extends CustomEnch {
 	}
 
 	@Override
-	public Rarity getRarity() {
+	public Rarity getEnchantmentRarity() {
 		return Rarity.COMMON;
 	}
 	@Override
