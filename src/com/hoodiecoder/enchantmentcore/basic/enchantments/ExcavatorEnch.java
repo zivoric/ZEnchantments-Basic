@@ -3,12 +3,14 @@ package com.hoodiecoder.enchantmentcore.basic.enchantments;
 import java.util.Arrays;
 import java.util.List;
 
+import com.hoodiecoder.enchantmentcore.enchant.BlockHandler;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -17,7 +19,7 @@ import com.hoodiecoder.enchantmentcore.CustomEnch;
 import com.hoodiecoder.enchantmentcore.EnchantmentHolder;
 import com.hoodiecoder.enchantmentcore.utils.EnchEnums.Rarity;
 
-public class ExcavatorEnch extends CustomEnch {
+public class ExcavatorEnch extends CustomEnch implements BlockHandler {
 	public ExcavatorEnch(EnchantmentHolder holder) {
 		super(holder, "excavator");
 	}
@@ -36,11 +38,21 @@ public class ExcavatorEnch extends CustomEnch {
 	public Rarity getEnchantmentRarity() {
 		return Rarity.VERY_RARE;
 	}
+
 	@Override
-	public void onBreakBlock(BlockBreakEvent event, List<Integer> levels, List<ItemStack> items) {
+	public EnchantmentTarget getItemTarget() {
+		return EnchantmentTarget.TOOL;
+	}
+
+	@Override
+	public void onPlaceBlock(Player player, List<Integer> levels, List<ItemStack> items, BlockPlaceEvent blockPlaceEvent) {
+
+	}
+
+	@Override
+	public void onBreakBlock(Player player, List<Integer> levels, List<ItemStack> items, BlockBreakEvent event) {
 		if (event.isCancelled()) return;
 		List<Material> disallowed = Arrays.asList(Material.BEDROCK, Material.BARRIER, Material.COMMAND_BLOCK, Material.BEDROCK, Material.END_PORTAL_FRAME, Material.END_PORTAL, Material.NETHER_PORTAL, Material.STRUCTURE_BLOCK);
-		Player player = event.getPlayer();
 		Block block = event.getBlock();
 		org.bukkit.Location locDiff = block.getLocation().subtract(player.getLocation().add(0, 1, 0));
 		int xMod = (int) Math.signum(locDiff.getX());
@@ -87,10 +99,5 @@ public class ExcavatorEnch extends CustomEnch {
 				}
 			}
 		}
-	}
-
-	@Override
-	public EnchantmentTarget getItemTarget() {
-		return EnchantmentTarget.TOOL;
 	}
 }

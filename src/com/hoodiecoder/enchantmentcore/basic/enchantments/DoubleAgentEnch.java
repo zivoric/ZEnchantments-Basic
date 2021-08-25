@@ -2,7 +2,9 @@ package com.hoodiecoder.enchantmentcore.basic.enchantments;
 
 import java.util.List;
 
+import com.hoodiecoder.enchantmentcore.enchant.TargetHandler;
 import org.bukkit.enchantments.EnchantmentTarget;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
 import org.bukkit.inventory.ItemStack;
@@ -11,7 +13,7 @@ import com.hoodiecoder.enchantmentcore.CustomEnch;
 import com.hoodiecoder.enchantmentcore.EnchantmentHolder;
 import com.hoodiecoder.enchantmentcore.utils.EnchEnums.Rarity;
 
-public class DoubleAgentEnch extends CustomEnch {
+public class DoubleAgentEnch extends CustomEnch implements TargetHandler {
 	public DoubleAgentEnch(EnchantmentHolder holder) {
 		super(holder, "double_agent");
 	}
@@ -31,7 +33,7 @@ public class DoubleAgentEnch extends CustomEnch {
 		return Rarity.VERY_RARE;
 	}
 	@Override
-	public void onTargeted(EntityTargetEvent event, List<Integer> levels, List<ItemStack> items) {
+	public void onTargeted(LivingEntity entity, List<Integer> levels, List<ItemStack> items, EntityTargetEvent event) {
 		TargetReason[] neutralReasons = new EntityTargetEvent.TargetReason[]{TargetReason.TARGET_ATTACKED_ENTITY, TargetReason.TARGET_ATTACKED_NEARBY_ENTITY, TargetReason.TARGET_ATTACKED_OWNER, TargetReason.REINFORCEMENT_TARGET};
 		TargetReason[] invalidReasons = new EntityTargetEvent.TargetReason[]{TargetReason.TEMPT, TargetReason.CUSTOM, TargetReason.UNKNOWN};
 		boolean canBeCanceled = true;

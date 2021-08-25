@@ -2,7 +2,9 @@ package com.hoodiecoder.enchantmentcore.basic.enchantments;
 
 import java.util.List;
 
+import com.hoodiecoder.enchantmentcore.enchant.ShootBowHandler;
 import org.bukkit.enchantments.EnchantmentTarget;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
@@ -13,7 +15,7 @@ import com.hoodiecoder.enchantmentcore.CustomEnch;
 import com.hoodiecoder.enchantmentcore.EnchantmentHolder;
 import com.hoodiecoder.enchantmentcore.utils.EnchEnums.Rarity;
 
-public class SnowballEnch extends CustomEnch {
+public class SnowballEnch extends CustomEnch implements ShootBowHandler {
 	public SnowballEnch(EnchantmentHolder holder) {
 		super(holder, "snowball_bow");
 	}
@@ -33,11 +35,10 @@ public class SnowballEnch extends CustomEnch {
 		return Rarity.UNFINDABLE;
 	}
 	@Override
-	public void onShootBow(EntityShootBowEvent event, List<Integer> levels, List<ItemStack> items) {
-		Player player = (Player) event.getEntity();
+	public void onShootBow(LivingEntity entity, List<Integer> levels, List<ItemStack> items, EntityShootBowEvent event) {
 		Projectile proj = (Projectile) event.getProjectile();
 		event.setCancelled(true);
-		player.launchProjectile(Snowball.class).setVelocity(proj.getVelocity());
+		entity.launchProjectile(Snowball.class).setVelocity(proj.getVelocity());
 	}
 
 	@Override
