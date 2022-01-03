@@ -1,24 +1,22 @@
 package io.zivoric.enchantmentcore.basic.enchantments;
 
-import java.util.List;
-
+import io.zivoric.enchantmentcore.CustomEnch;
 import io.zivoric.enchantmentcore.enchant.DamageHandler;
+import io.zivoric.enchantmentcore.utils.EnchEnums.Rarity;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import io.zivoric.enchantmentcore.CustomEnch;
-import io.zivoric.enchantmentcore.EnchantmentHolder;
-import io.zivoric.enchantmentcore.utils.EnchEnums.Rarity;
+import java.util.List;
 
 public class EnergizerEnch extends CustomEnch implements DamageHandler {
-	public EnergizerEnch(EnchantmentHolder holder) {
-		super(holder, "energizer");
+	public EnergizerEnch(Plugin plugin) {
+		super(plugin, "energizer");
 	}
 
 	@Override
@@ -46,10 +44,6 @@ public class EnergizerEnch extends CustomEnch implements DamageHandler {
 		if (speedLevel>2) speedLevel = 2;
 		PotionEffect scalingSpeed = new PotionEffect(PotionEffectType.SPEED, 5*(scale), speedLevel+1, true);
 		entity.addPotionEffect(scalingSpeed);
-	}
-
-	@Override
-	public void onTakeDamage(LivingEntity livingEntity, List<Integer> list, List<ItemStack> list1, EntityDamageEvent entityDamageEvent) {
 	}
 
 	@Override

@@ -1,21 +1,20 @@
 package io.zivoric.enchantmentcore.basic.enchantments;
 
-import java.util.List;
-
+import io.zivoric.enchantmentcore.CustomEnch;
 import io.zivoric.enchantmentcore.enchant.TargetHandler;
+import io.zivoric.enchantmentcore.utils.EnchEnums.Rarity;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.EntityTargetEvent.TargetReason;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
-import io.zivoric.enchantmentcore.CustomEnch;
-import io.zivoric.enchantmentcore.EnchantmentHolder;
-import io.zivoric.enchantmentcore.utils.EnchEnums.Rarity;
+import java.util.List;
 
 public class DoubleAgentEnch extends CustomEnch implements TargetHandler {
-	public DoubleAgentEnch(EnchantmentHolder holder) {
-		super(holder, "double_agent");
+	public DoubleAgentEnch(Plugin plugin) {
+		super(plugin, "double_agent");
 	}
 
 	@Override

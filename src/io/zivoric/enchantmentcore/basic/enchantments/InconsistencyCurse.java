@@ -1,23 +1,22 @@
 package io.zivoric.enchantmentcore.basic.enchantments;
 
-import java.util.List;
-
+import io.zivoric.enchantmentcore.CustomEnch;
 import io.zivoric.enchantmentcore.enchant.BlockHandler;
+import io.zivoric.enchantmentcore.utils.EnchEnums.Rarity;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
-import io.zivoric.enchantmentcore.CustomEnch;
-import io.zivoric.enchantmentcore.EnchantmentHolder;
-import io.zivoric.enchantmentcore.utils.EnchEnums.Rarity;
+import java.util.List;
 
 public class InconsistencyCurse extends CustomEnch implements BlockHandler {
 
-	public InconsistencyCurse(EnchantmentHolder holder) {
-		super(holder, "inconsistency_curse");
+	public InconsistencyCurse(Plugin plugin) {
+		super(plugin, "inconsistency_curse");
 	}
 
 	@Override
@@ -48,11 +47,6 @@ public class InconsistencyCurse extends CustomEnch implements BlockHandler {
 	@Override
 	public Rarity getEnchantmentRarity() {
 		return Rarity.VERY_RARE;
-	}
-
-	@Override
-	public void onPlaceBlock(Player player, List<Integer> levels, List<ItemStack> items, BlockPlaceEvent blockPlaceEvent) {
-
 	}
 
 	@Override

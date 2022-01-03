@@ -1,30 +1,18 @@
 package io.zivoric.enchantmentcore.basic;
 
+import io.zivoric.enchantmentcore.CustomEnch;
+import io.zivoric.enchantmentcore.basic.enchantments.*;
+import io.zivoric.enchantmentcore.plugin.EnchantmentPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import io.zivoric.enchantmentcore.CustomEnch;
-import io.zivoric.enchantmentcore.EnchantmentHolder;
-import io.zivoric.enchantmentcore.basic.enchantments.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class BasicEnchPlugin extends JavaPlugin {
-	private final EnchantmentHolder holder = new EnchantmentHolder(this);
-	public final CustomEnch INCONSISTENCY_CURSE = new InconsistencyCurse(holder);
-	public final CustomEnch DECAY = new DecayEnch(holder);
-	public final CustomEnch DOUBLE_AGENT = new DoubleAgentEnch(holder);
-	public final CustomEnch ENERGIZER = new EnergizerEnch(holder);
-	public final CustomEnch EXCAVATOR = new ExcavatorEnch(holder);
-	public final CustomEnch HEALING = new HealingEnch(holder);
-	public final CustomEnch LEVITATOR = new LevitatorEnch(holder);
-	public final CustomEnch LIFE_STEAL = new LifestealEnch(holder);
-	public final CustomEnch SNOWBALL_BOW = new SnowballEnch(holder);
-	private static BasicEnchPlugin instance = null;
-	
+public class BasicEnchPlugin extends JavaPlugin implements EnchantmentPlugin {
 	@Override
-	public void onEnable() {
-		instance = this;
-		holder.registerPendingEnchants();
-	}
-	public static BasicEnchPlugin getInstance() {
-		return instance;
+	public List<CustomEnch> getEnchants() {
+		return List.of(new InconsistencyCurse(this), new DecayEnch(this), new DoubleAgentEnch(this), new EnergizerEnch(this),
+				new ExcavatorEnch(this), new HealingEnch(this), new LevitatorEnch(this),
+				new LifestealEnch(this), new SnowballEnch(this));
 	}
 }

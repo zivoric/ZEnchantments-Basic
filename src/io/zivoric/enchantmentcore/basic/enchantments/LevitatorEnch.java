@@ -1,23 +1,22 @@
 package io.zivoric.enchantmentcore.basic.enchantments;
 
-import java.util.List;
-
+import io.zivoric.enchantmentcore.CustomEnch;
 import io.zivoric.enchantmentcore.enchant.DamageHandler;
+import io.zivoric.enchantmentcore.utils.EnchEnums.Rarity;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import io.zivoric.enchantmentcore.CustomEnch;
-import io.zivoric.enchantmentcore.EnchantmentHolder;
-import io.zivoric.enchantmentcore.utils.EnchEnums.Rarity;
+import java.util.List;
 
 public class LevitatorEnch extends CustomEnch implements DamageHandler {
-	public LevitatorEnch(EnchantmentHolder holder) {
-		super(holder, "levitator");
+	public LevitatorEnch(Plugin plugin) {
+		super(plugin, "levitator");
 	}
 
 	@Override
@@ -33,9 +32,6 @@ public class LevitatorEnch extends CustomEnch implements DamageHandler {
 	@Override
 	public Rarity getEnchantmentRarity() {
 		return Rarity.UNFINDABLE;
-	}
-	@Override
-	public void onTakeDamage(LivingEntity livingEntity, List<Integer> list, List<ItemStack> list1, EntityDamageEvent entityDamageEvent) {
 	}
 	@Override
 	public void onDealDamage(LivingEntity entity, List<Integer> levels, List<ItemStack> items, EntityDamageByEntityEvent event) {

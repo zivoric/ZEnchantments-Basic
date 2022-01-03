@@ -1,9 +1,8 @@
 package io.zivoric.enchantmentcore.basic.enchantments;
 
-import java.util.Arrays;
-import java.util.List;
-
+import io.zivoric.enchantmentcore.CustomEnch;
 import io.zivoric.enchantmentcore.enchant.BlockHandler;
+import io.zivoric.enchantmentcore.utils.EnchEnums.Rarity;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -14,14 +13,14 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 
-import io.zivoric.enchantmentcore.CustomEnch;
-import io.zivoric.enchantmentcore.EnchantmentHolder;
-import io.zivoric.enchantmentcore.utils.EnchEnums.Rarity;
+import java.util.Arrays;
+import java.util.List;
 
 public class ExcavatorEnch extends CustomEnch implements BlockHandler {
-	public ExcavatorEnch(EnchantmentHolder holder) {
-		super(holder, "excavator");
+	public ExcavatorEnch(Plugin plugin) {
+		super(plugin, "excavator");
 	}
 
 	@Override
@@ -42,11 +41,6 @@ public class ExcavatorEnch extends CustomEnch implements BlockHandler {
 	@Override
 	public EnchantmentTarget getItemTarget() {
 		return EnchantmentTarget.TOOL;
-	}
-
-	@Override
-	public void onPlaceBlock(Player player, List<Integer> levels, List<ItemStack> items, BlockPlaceEvent blockPlaceEvent) {
-
 	}
 
 	@Override

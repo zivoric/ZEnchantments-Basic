@@ -1,23 +1,21 @@
 package io.zivoric.enchantmentcore.basic.enchantments;
 
-import java.util.List;
-
+import io.zivoric.enchantmentcore.CustomEnch;
 import io.zivoric.enchantmentcore.enchant.ShootBowHandler;
+import io.zivoric.enchantmentcore.utils.EnchEnums.Rarity;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
-import io.zivoric.enchantmentcore.CustomEnch;
-import io.zivoric.enchantmentcore.EnchantmentHolder;
-import io.zivoric.enchantmentcore.utils.EnchEnums.Rarity;
+import java.util.List;
 
 public class SnowballEnch extends CustomEnch implements ShootBowHandler {
-	public SnowballEnch(EnchantmentHolder holder) {
-		super(holder, "snowball_bow");
+	public SnowballEnch(Plugin plugin) {
+		super(plugin, "snowball_bow");
 	}
 
 	@Override
