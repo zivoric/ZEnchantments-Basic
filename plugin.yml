@@ -1,6 +1,6 @@
 name: ZEnchantments-Basic
 main: io.zivoric.enchantmentcore.basic.BasicEnchPlugin
-version: 1.3.0
+version: 1.4.0
 api-version: 1.13
 depend: [ZEnchantmentCore]
 #commands:
